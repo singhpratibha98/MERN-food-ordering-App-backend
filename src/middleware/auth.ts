@@ -13,8 +13,8 @@ declare global {
 }
 
 export const jwtCheck = auth({
-  audience: process.env.AUTH0_AUDIENCE,
-  issuerBaseURL: process.env.AUTH0_ISSUER_BASE_URL,
+  audience: process.env.Auth0_AUDIENCE,
+  issuerBaseURL: process.env.Auth0_ISSUER_BASE_URL,
   tokenSigningAlg: "RS256",
 });
 
@@ -44,7 +44,13 @@ export const jwtParse = async (
 
     req.auth0Id = auth0Id as string;
     // req.userId = user._id.toString();
+    
+    if (user && user._id) {
+        req.userId = user._id.toString();
+    }
+    
     next();
+
   } catch (error) {
     return res.sendStatus(401);
   }
